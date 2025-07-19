@@ -2,6 +2,6 @@
   "$schema": "https://railway.app/railway.schema.json",
   "build": { "builder": "NIXPACKS" },
   "deploy": {
-    "startCommand": "streamlit run app_stock_forecast.py --server.address 0.0.0.0 --server.port $PORT --server.fileWatcherType none"
+    "startCommand": "streamlit run app_stock_forecast.py --server.address 0.0.0.0 --server.port 8080 --server.fileWatcherType none"
   }
 }
