@@ -3,6 +3,7 @@ FROM python:3.11
 
 # Set working directory
 WORKDIR /app
+COPY . /app
 
 # Copy files
 COPY requirements.txt .
