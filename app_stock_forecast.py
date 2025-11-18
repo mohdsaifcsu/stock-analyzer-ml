@@ -13,7 +13,7 @@ import plotly.graph_objects as go
 
 # --- Streamlit UI ---
 st.set_page_config(layout="wide")
-st.title("📈 Stock Analyzer with ML Forecast")
+st.title(" Stock Analyzer with ML Forecast")
 st.markdown("Enter a stock symbol and date range to view trends and forecast the next 7 days.")
 
 # --- Stock Symbol Input ---
@@ -21,17 +21,17 @@ symbol = st.text_input("Enter Stock Symbol (e.g., AAPL, MSFT, TSLA)", "AAPL").up
 
 # --- API Key Input with Default ---
 default_key = "GKI9ZPPWV5BUJ5VH"
-api_key = st.text_input("🔐 Enter your Alpha Vantage API Key", value=default_key, type="password")
+api_key = st.text_input(" Enter your Alpha Vantage API Key", value=default_key, type="password")
 
 # --- Date Inputs ---
 col1, col2 = st.columns(2)
 with col1:
-    start_date = st.date_input("📅 Start Date", pd.to_datetime("2024-01-01"))
+    start_date = st.date_input(" Start Date", pd.to_datetime("2024-01-01"))
 with col2:
-    end_date = st.date_input("📅 End Date", pd.to_datetime("2025-06-30"))
+    end_date = st.date_input(" End Date", pd.to_datetime("2025-06-30"))
 
 # --- Fetch Button ---
-if st.button("📥 Fetch & Forecast"):
+if st.button(" Fetch & Forecast"):
     try:
         # Step 1: Load Data
         ts = TimeSeries(key=api_key, output_format='pandas')
@@ -42,16 +42,16 @@ if st.button("📥 Fetch & Forecast"):
         filtered = filtered.sort_index(ascending=True)
 
         if filtered.empty:
-            st.error("❌ No data available for selected range.")
+            st.error(" No data available for selected range.")
             st.stop()
 
-        st.success("✅ Data loaded successfully!")
-        st.write("### 🧾 Raw Data", filtered.tail())
+        st.success(" Data loaded successfully!")
+        st.write("###  Raw Data", filtered.tail())
 
         # Step 2: Technical Indicators
         filtered['MA_20'] = filtered['Close'].rolling(window=20).mean()
 
-        # ✅ Correct RSI Calculation
+        #  Correct RSI Calculation
         delta = filtered['Close'].diff()
         gain = delta.clip(lower=0)
         loss = -delta.clip(upper=0)
@@ -77,7 +77,7 @@ if st.button("📥 Fetch & Forecast"):
 
         y_pred = model.predict(X_test)
         rmse = np.sqrt(mean_squared_error(y_test, y_pred))
-        st.info(f"📉 RMSE on test set: {rmse:.2f}")
+        st.info(f" RMSE on test set: {rmse:.2f}")
 
         # Step 4: Forecast Next 7 Days
         last_7_input = filtered['Close'][-forecast_days:].to_numpy().reshape(-1, 1)
@@ -88,14 +88,14 @@ if st.button("📥 Fetch & Forecast"):
         forecast_df = pd.DataFrame({'Date': future_dates, 'Predicted_Close': future_predictions})
         forecast_df.set_index('Date', inplace=True)
 
-        st.write("### 📆 Forecast for Next 7 Days")
+        st.write("###  Forecast for Next 7 Days")
         st.dataframe(forecast_df.style.format({"Predicted_Close": "{:.2f}"}))
 
         # Step 5: Matplotlib Forecast Plot
-        st.write("### 📉 ML Forecast Plot")
+        st.write("###  ML Forecast Plot")
         fig, ax = plt.subplots(figsize=(12, 6))
 
-        # ✅ Convert to NumPy for indexing
+        #  Convert to NumPy for indexing
         actual_dates = filtered.index.to_numpy()
         actual_close = filtered['Close'].to_numpy()
         future_x = forecast_df.index.to_numpy()
@@ -111,7 +111,7 @@ if st.button("📥 Fetch & Forecast"):
         st.pyplot(fig)
 
         # Step 6: Interactive Candlestick + Volume + RSI Plot
-        st.write("### 📊 Interactive Visualization")
+        st.write("###  Interactive Visualization")
 
         fig = make_subplots(
             rows=3, cols=1,
@@ -166,4 +166,4 @@ if st.button("📥 Fetch & Forecast"):
         st.plotly_chart(fig, use_container_width=True)
 
     except Exception as e:
-        st.error(f"❌ Error: {e}")
+        st.error(f" Error: {e}")
