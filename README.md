@@ -46,17 +46,17 @@ A Streamlit-based stock analysis app that fetches historical stock data from Alp
 ```bash
 git clone https://github.com/your-username/stock-analyzer-app.git
 cd stock-analyzer-app
-
+```
 ## 2. Build the Docker image
 
 ```bash
 docker build -t stock-analyzer-app .
-
+```
 ## 3. Run the Docker container
 
 ```bash
 docker run -d -p 8501:8501 stock-analyzer-app
-
+```
 ## 4. Open in your browser
 
 Visit: http://localhost:8501
